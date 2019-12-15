@@ -27,6 +27,36 @@ formatter.match({
 formatter.result({
   "status": "passed"
 });
+formatter.step({
+  "name": "enter username",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "StepDefinition.enter_username()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "enter password",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "StepDefinition.enter_password()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "click on login",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "StepDefinition.click_on_login()"
+});
+formatter.result({
+  "status": "passed"
+});
 formatter.scenario({
   "name": "Login to mercury site",
   "description": "",
@@ -41,11 +71,21 @@ formatter.scenario({
   ]
 });
 formatter.step({
-  "name": "scroll down",
+  "name": "click on continue",
   "keyword": "Then "
 });
 formatter.match({
-  "location": "StepDefinition.scroll_down()"
+  "location": "StepDefinition.click_on_continue()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "get multiple elements size",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "StepDefinition.get_multiple_elements_size()"
 });
 formatter.result({
   "status": "passed"

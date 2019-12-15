@@ -9,7 +9,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -23,11 +25,12 @@ public class StepDefinition {
 	private PageObjects page;
 	
 	@Before()
-	public void startup(){
+	public void startup() throws Exception{
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		page = new PageObjects(driver);
+		Excelutils.setExcelFile(Config.Path_TestData, "Sheet1");
 		
 	}
 	
@@ -49,24 +52,40 @@ public class StepDefinition {
 	}
 
 	@Then("enter username")
-	public void enter_username() {
+	public void enter_username() throws Exception {
 	   
 //	driver.findElement(By.name("userName")).sendKeys(Config.username);-
-		page.username().sendKeys(Config.username);
+		String username = Excelutils.getCellData(1, 1);
+		page.username().sendKeys(username);
 	}
 
 	@Then("enter password")
-	public void enter_password() {
+	public void enter_password() throws Exception {
 	   
 //	driver.findElement(By.name("password")).sendKeys(Config.password);
-		page.password.sendKeys(Config.password);
+//		
+		
+		String password = Excelutils.getCellData(1, 2);
+		page.password.sendKeys(password);
 	}
 
 	@Then("click on login")
-	public void click_on_login() {
+	public void click_on_login() throws InterruptedException {
 
 //	driver.findElement(By.name("login")).click();-
-		page.login.click();
+//		page.login.click();
+		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click();", page.login);
+		Thread.sleep(3000);
+		
+//		 or 
+		
+//		 actions
+		
+//		Actions action = new Actions(driver);
+//		action.click(page.login).perform();
+		
 	}
 
 	@Then("print the title of the page")
@@ -95,6 +114,23 @@ public class StepDefinition {
 	scroll.executeScript("scrollBy(0,-250)");
 	Thread.sleep(3000);
 	}
+	@Then("click on continue")
+	public void click_on_continue() {
+
+	page.continue_button.click();
+	}
+
+	@Then("get multiple elements size")
+	public void get_multiple_elements_size() {
+		for (WebElement ele: page.mulele){
+		for ( int i=0;  i<=page.mulele.size(); i++){
+			ele.click();
+		System.out.println("clicked on element sucessfully");
+		}
+		}
+		System.out.println("size of the elements are "+page.mulele.size());
+	}
+	
 
 
 }
